@@ -2,6 +2,7 @@
 
 Paper: [Conesa et al 2016. A survey of best practices for RNA-seq data analysis. Genome Biol. 2016 Aug 26;17(1):181.](http://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0881-8) 
 
+## Overview:
 * RNA is the key intermediate between the genome and the proteome
 * RNA sequencing has many benefits: allows us to ask what is transcribed where and when, also there is less RNA than DNA (usually) so, sequencing the whole transcriptome of a new organism can be cheaper than sequencing the whole genome
 * There is no optimal pipeline, there are many to choose from depending on question: mapping vs. de novo assembly, or microRNA (play a transcription regulatory role)
@@ -9,10 +10,12 @@ Paper: [Conesa et al 2016. A survey of best practices for RNA-seq data analysis.
 * Important to review options so that data generated can answer your biological question, but also save money
 * experimental design -> quality control -> reads alignment vs. de novo assembly -> quantification of transcripts -> expression analysis (won't get into other types of analysis besides gene expression analysis)
 
+## Questions:
 * @jthmiller questions about size selection during library prep
 
-* Roadmap on Figure 1 has some good considerations, they did not mention contamination
+## Experimental Design Considerations:
 
+* Roadmap on Figure 1 has some good considerations, they did not mention contamination
 * stranded libraries vs. not?
 * How many reads are necessary per sample?
 * power analysis for optimal # samples, see http://scotty.genetics.utah.edu/
@@ -20,21 +23,31 @@ Paper: [Conesa et al 2016. A survey of best practices for RNA-seq data analysis.
 * this paper was cited, looks good to read in more depth: http://genome.cshlp.org/content/21/12/2213.full.pdf+html
 * PE vs. single? "The cheaper, short SE reads are normally sufficient for studies of gene expression levels in well-annotated organisms."
 * Table 1, statistical power to detect differential epxression varies with outcome: fold change, millions of reads, and # replicates (3, 5, and 10 replicates per group)
-* QC, they recommend fastqc and Trimmomatic (which we use)
+
+## QC
+
+* they recommend fastqc and Trimmomatic (which we use)
 * adapter trimming definitely, light trimming recommended vs. aggressive, see Figure 2 in MacManes 2014 (http://journal.frontiersin.org/article/10.3389/fgene.2014.00013/full) @macmanes
-* mapping to genome vs. transcriptome, slightly lower with transcriptome because losing unannotated transcripts and more multi-mappings because reads falling onto exons shared by different isoforms (bowtie1 will allow setting with only 1 mapping)
+
+## Mapping to a reference genome/transcriptome
+
+* to genome vs. transcriptome, slightly lower with transcriptome because losing unannotated transcripts and more multi-mappings because reads falling onto exons shared by different isoforms (bowtie1 will allow setting with only 1 mapping)
 * poor quality RNA starting material will show 3' bias
 * quality control after quantification to make sure low ribosomal content doesn't bleed through (it will be there, but should be small)
 * run PCA to make sure no batch effects or funny stuff going on with your samples
 * Figure 2, representative software includes more options than those listed, see lecture by @rob-p http://robpatro.com/redesign/Quantification.pdf
 * Box 3 is excellent summary of mapping to a reference
-* have never used any of the transcript discovery software mentioned, GRIT, CAGE, RAMPAGE, SLIDE, etc. They make a point to say it is difficult - not trivial, unless you are really looking for novel transcripts with a referece and don't want to do de novo assembly
-* de novo assembly produces a lot of contigs - sweet spot between enough reads and too many (complicates de Bruijn graphs, can lead to misassembly)
+* I've never used any of the transcript discovery software mentioned, GRIT, CAGE, RAMPAGE, SLIDE, etc. They make a point to say it is difficult - not trivial, unless you are really looking for novel transcripts with a referece and don't want to do de novo assembly
+
+## De novo assembly 
+
+* Takes all raw reads and assembles them into contigs (each contig should be full-length transcripts, in theory)
+* Software often produce a lot of contigs - sweet spot between enough reads and too many (complicates de Bruijn graphs, can lead to misassembly)
 * recommend diginorm to eliminate redundancy: https://khmer-protocols.readthedocs.io/en/ctb/mrnaseq/2-diginorm.html
 
-Transcript quantification:
+## Transcript quantification:
 
-* this is what RNAseq is most commonly used for
+* endpoint of the analysis, what RNAseq is most commonly used for
 * general idea is to quantify # reads mapping onto each transcript
 * many ways to do this: Sailfish uses k-mer counting
 * HTSeq-count or featureCounts aggregates raw counts of mapped reads with gtf file
@@ -53,7 +66,7 @@ Transcript quantification:
 * DESeq (regarded as "too conservative" and edgeR ("too liberal") are relatively similar
 * see comparison in workshop setting: https://monsterbashseq.wordpress.com/2015/08/26/rnaseq-differential-expression-analysis-ngs2015/
 
-Visualization:
+## Visualization:
 
 * UCSC genome browser
 * IGV
@@ -61,7 +74,7 @@ Visualization:
 * Cool web-based package to make plots, visualize counts tables: http://victorian-bioinformatics-consortium.github.io/degust/
 * Would like to try Circos plots: see Fig. 2 from Alexander et al. 2015 http://www.pnas.org/content/112/44/E5972.full
 
-Future:
+## Future:
 
 * I see a very big future in using long-reads to resolve full-length transcripts and overcome assembly problems
 
