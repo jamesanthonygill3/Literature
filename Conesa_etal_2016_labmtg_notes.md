@@ -45,6 +45,10 @@ Paper: [Conesa et al 2016. A survey of best practices for RNA-seq data analysis.
 * Software often produce a lot of contigs - sweet spot between enough reads and too many (complicates de Bruijn graphs, can lead to misassembly)
 * recommend diginorm to eliminate redundancy: https://khmer-protocols.readthedocs.io/en/ctb/mrnaseq/2-diginorm.html
 
+Note: de novo vs. mapping, results from student exercise at NGS2016: https://docs.google.com/spreadsheets/d/12X06LqGM8j4a4oV3_IsM91Hvop6B7L84xSWR71dXK3E/edit#gid=0
+
+Here's the exercise by @mestato: http://angus.readthedocs.io/en/2016/arabidopsis_assembly_challenge.html)
+
 ## Transcript quantification:
 
 * endpoint of the analysis, what RNAseq is most commonly used for
